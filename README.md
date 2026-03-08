@@ -1,4 +1,4 @@
-# PageIndex Agent UI
+# PageIndex Chat UI
 
 <p align="center">
   <strong>基于树状结构推理的 Agentic RAG 文档问答系统</strong><br>
