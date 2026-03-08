@@ -28,6 +28,7 @@
 
 *没有任何 Embedding、没有向量数据库，完全依靠 LLM 的推理能力完成检索。*
 
+![WebUI示意图](image/WebUI.png)
 ---
 
 ## ✨ 核心特性
