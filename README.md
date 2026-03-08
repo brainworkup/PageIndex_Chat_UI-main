@@ -18,7 +18,9 @@
 
 ## 📖 项目简介
 
-**PageIndex Chat UI** 是一个面向 PDF 文档的智能问答系统。它基于开源项目 PageIndex 的核心索引算法，并在其上搭建了完整的 **Agentic RAG（检索增强生成）**交互界面。
+**PageIndex Chat UI** 是一个面向 PDF 文档的智能问答系统。它基于开源项目 PageIndex 的核心索引算法，并在其上搭建了完整的 **Agentic RAG（检索增强生成**交互界面。
+
+![WebUI示意图](image/WebUI.png)
 
 ### 💡 核心理念：相似度 ≠ 相关性
 
@@ -28,7 +30,7 @@
 
 *没有任何 Embedding、没有向量数据库，完全依靠 LLM 的推理能力完成检索。*
 
-![WebUI示意图](image/WebUI.png)
+
 ---
 
 ## ✨ 核心特性
