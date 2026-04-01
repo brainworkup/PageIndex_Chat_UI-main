@@ -1,36 +1,36 @@
 ---
-name: 表格数据提取（仅视觉模型）
-description: 从文档中定位并提取表格数据，以标准 Markdown 表格格式输出
+name: Table Data Extraction (Visual Model Only)
+description: Locate and extract table data from documents and output it in standard Markdown table format
 enabled: true
 ---
 
-## 使用场景
-当用户要求提取、整理或展示文档中某个或某些表格的数据时激活此技能。
+## Use Case
+Activate this skill when the user requests to extract, organize, or display table data from a document.
 
-## 执行步骤
-1. **定位表格**：通过 keyword_search 搜索 "Table"、"表" 等关键词，或使用 tree_search 查询用户指定的表格编号/名称，确定表格所在节点
-2. **读取内容**：使用 read_node 获取表格所在节点的完整文本；若文本中表格不完整，使用 navigate_outline 查看相邻节点补全数据
-3. **提取表格**（仅视觉模式）：使用 view_pages 工具对目标节点进行结构化提取
-4. **视觉辅助**（仅视觉模式）：如果文本提取结果不完整或格式混乱，使用 view_pages 查看表格原图，结合视觉分析补全缺失的行列数据
-5. **格式化输出**：将提取到的数据整理为标准 Markdown 表格
+## Execution Steps
+1. **Locate the table**: Use keyword_search with terms like "Table" to find table references, or use tree_search with the table number/name specified by the user to identify the containing node
+2. **Read content**: Use read_node to retrieve the full text of the node containing the table; if the table is incomplete in the text, use navigate_outline to check adjacent nodes for missing data
+3. **Extract the table** (visual mode only): Use the view_pages tool to perform structured extraction on the target node
+4. **Visual assistance** (visual mode only): If the text extraction result is incomplete or poorly formatted, use view_pages to view the original table image and supplement missing row/column data with visual analysis
+5. **Format output**: Organize the extracted data into a standard Markdown table
 
-## 输出格式
-按以下结构输出：
+## Output Format
+Output using the following structure:
 
-**表格名称**：Table X — 标题（如有）
+**Table Name**: Table X — Title (if available)
 
-**表格位置**：节点 XXXX，第 X 页
+**Table Location**: Node XXXX, Page X
 
-| 列1 | 列2 | 列3 | ... |
-|-----|-----|-----|-----|
-| 数据 | 数据 | 数据 | ... |
+| Col 1 | Col 2 | Col 3 | ... |
+|-------|-------|-------|-----|
+| data  | data  | data  | ... |
 
-**补充说明**：
-- 若表格中有合并单元格，用文字注明
-- 若表格有脚注或备注，附在表格下方
-- 若数据不完整无法还原，明确指出缺失部分
+**Additional Notes**:
+- If the table contains merged cells, describe them in text
+- If the table has footnotes or remarks, append them below the table
+- If data is incomplete and cannot be fully reconstructed, clearly indicate the missing parts
 
-## 注意事项
-- 保持数据精度，不要四舍五入或省略原始数值
-- 如果表格跨页或跨节点，需要合并所有片段后再输出完整表格
-- 表头必须准确，不要自行编造列名
+## Notes
+- Preserve data precision; do not round or omit original values
+- If a table spans multiple pages or nodes, merge all fragments before outputting the complete table
+- Table headers must be accurate; do not invent column names

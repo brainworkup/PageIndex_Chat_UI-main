@@ -1,29 +1,29 @@
 ---
-name: 关键信息提取
-description: 从论文中提取核心贡献、方法、实验结果等关键信息
+name: Key Information Extraction
+description: Extract core contributions, methods, experimental results, and other key information from papers
 enabled: true
 ---
 
-## 使用场景
-当用户要求快速了解一篇论文的核心内容、总结关键发现时激活此技能。
+## Use Case
+Activate this skill when the user wants a quick overview of a paper's core content or a summary of its key findings.
 
-## 执行步骤
-1. 先用 tree_search 获取文档整体结构
-2. 依次检索以下关键部分：
-   - Abstract / 摘要
-   - Introduction 中的贡献声明（Contributions）
-   - 方法/模型的核心设计
-   - 实验设置（数据集、基线方法、评价指标）
-   - 主要实验结果和消融实验
-   - 结论与未来工作
+## Execution Steps
+1. Use tree_search to obtain the overall document structure
+2. Retrieve the following key sections in order:
+   - Abstract
+   - Contribution statements in the Introduction
+   - Core design of the method/model
+   - Experimental setup (datasets, baselines, evaluation metrics)
+   - Main experimental results and ablation studies
+   - Conclusion and future work
 
-## 输出格式
-按以下结构输出：
+## Output Format
+Output using the following structure:
 
-**📄 论文概要**
-- **研究问题**：...
-- **核心贡献**：（列出 2-4 点）
-- **方法概述**：...
-- **关键实验结果**：...
-- **结论**：...
-- **局限与未来方向**：...
+**📄 Paper Summary**
+- **Research Problem**: ...
+- **Core Contributions**: (list 2–4 points)
+- **Method Overview**: ...
+- **Key Experimental Results**: ...
+- **Conclusion**: ...
+- **Limitations & Future Directions**: ...
