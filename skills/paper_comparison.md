@@ -1,7 +1,7 @@
 ---
 name: Paper Comparison Analysis
 description: Systematically compare the similarities and differences between different methods, models, or sections in a document
-enabled: true
+enabled: false
 ---
 
 ## Use Case

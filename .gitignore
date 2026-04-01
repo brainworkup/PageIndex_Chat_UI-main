@@ -54,4 +54,5 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.omx/
+# .omx/
+tasks_for_ui_files/

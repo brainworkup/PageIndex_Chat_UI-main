@@ -1,7 +1,7 @@
 ---
 name: Formula Explainer
 description: Explain mathematical formulas in documents in detail, including symbol definitions and derivation logic
-enabled: true
+enabled: false
 ---
 
 ## Use Case

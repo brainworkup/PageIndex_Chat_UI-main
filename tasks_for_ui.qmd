@@ -1,0 +1,14 @@
+---
+title: "to do to UI"
+format: html
+---
+
+## implement these functions
+
+- [ ] button to copy/paste the output
+- [ ] button to download the output as a file
+- [ ] i dont understand what text and vision models do differently?
+- [ ] be able to add multiple patients
+  - [ ] but maybe not?
+- [ ] **upload multiple docs at once**
+- [ ] Process multiple docs simultaneously for summarization and Q/A

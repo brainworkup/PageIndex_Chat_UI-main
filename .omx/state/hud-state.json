@@ -1,0 +1,5 @@
+{
+  "last_turn_at": "2026-04-01T08:11:25.544Z",
+  "turn_count": 1,
+  "last_agent_output": "Fixed the key-loading path. The server now loads `.env` on startup and uses a single runtime config "
+}
