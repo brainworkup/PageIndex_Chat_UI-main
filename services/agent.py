@@ -30,7 +30,7 @@ MAX_RETRY = 1
 REFLECT_ACCEPT_THRESHOLD = 6
 
 LANG_INSTRUCTION = (
-    "Important: You MUST respond in Chinese (简体中文). All your output text, reasoning, analysis, and answers should be in Chinese. "
+    "Important: You MUST respond in English. All your output text, reasoning, analysis, and answers should be in English. "
     "When mentioning any mathematical symbol, variable, subscript, superscript, or formula, "
     "you MUST wrap them in LaTeX delimiters: use $...$ for inline math (e.g. $s_j$, $f_{MD}$, $t_{m,i}^{\\mathrm{loc}}$) "
     "and \\\\[...\\\\] for display/block math. NEVER output bare symbols like x_i or s_{j+1} without dollar signs."
@@ -99,8 +99,8 @@ Rules:
 Output JSON only:
 {{
     "needs_decomposition": true or false,
-    "reasoning": "用中文简要说明",
-    "sub_questions": ["子问题1", "子问题2"],
+    "reasoning": "brief reasoning",
+    "sub_questions": ["sub-question 1", "sub-question 2"],
     "synthesis_strategy": "compare" | "aggregate" | "sequence" | "direct"
 }}"""
         try:
@@ -158,7 +158,7 @@ If you already have enough information, choose "final_answer".
 
 Output JSON only:
 {{
-    "thought": "用中文描述你的推理过程",
+    "thought": "describe your reasoning process",
     "action": {{
         "tool": "tool_name",
         "input": {{ ... }}
@@ -214,8 +214,8 @@ Check:
 Output JSON only:
 {{
     "score": <1-10>,
-    "issues": ["用中文描述问题1", ...],
-    "missing_info": ["用中文描述缺失信息"],
+    "issues": ["describe issue 1", ...],
+    "missing_info": ["describe missing information"],
     "action": "accept" or "retry"
 }}"""
         try:
@@ -250,15 +250,15 @@ Document structure:
 
 Output JSON only:
 {{
-    "summary": "用2-3句中文概括整篇文档的主要内容",
-    "key_findings": ["核心发现1", "核心发现2", "核心发现3"],
-    "main_topics": ["主题1", "主题2"],
+    "summary": "2-3 sentence summary of the document's main content",
+    "key_findings": ["key finding 1", "key finding 2", "key finding 3"],
+    "main_topics": ["topic 1", "topic 2"],
     "suggested_questions": [
-        "读者可能想问的中文问题1",
-        "中文问题2",
-        "中文问题3",
-        "中文问题4",
-        "中文问题5"
+        "suggested question 1",
+        "suggested question 2",
+        "suggested question 3",
+        "suggested question 4",
+        "suggested question 5"
     ]
 }}"""
         try:
@@ -639,7 +639,7 @@ Output JSON only:
         parts = []
         if analytical_outputs:
             parts.append(
-                "【工具分析结果 - 已由AI处理，请直接采信并基于此作答】\n"
+                "[Tool Analysis Results — processed by AI, use as primary reference]\n"
                 + "\n\n".join(analytical_outputs)
             )
         if raw_node_texts:
@@ -647,9 +647,9 @@ Output JSON only:
             budget = 4000 if analytical_outputs else 12000
             if len(raw_combined) > budget:
                 raw_combined = raw_combined[:budget] + "\n...(truncated)"
-            parts.append("【原文补充】\n" + raw_combined)
+            parts.append("[Source Text Supplement]\n" + raw_combined)
         if visual_observations:
-            parts.append("【视觉分析】\n" + "\n\n".join(visual_observations))
+            parts.append("[Visual Analysis]\n" + "\n\n".join(visual_observations))
         return "\n\n".join(parts)
 
     @staticmethod
@@ -740,7 +740,7 @@ Question: {query}
 {skill_note}
 
 {LANG_INSTRUCTION}
-Provide a clear, comprehensive answer in Chinese.
+Provide a clear, comprehensive answer in English.
 Base your answer primarily on the analysis context, supplemented by what you can see in the images.
 If sub-questions were used, synthesize a unified answer.
 Use Markdown formatting for better readability."""
@@ -777,7 +777,7 @@ Context:
 {skill_note}
 
 {LANG_INSTRUCTION}
-Provide a clear, comprehensive answer in Chinese. Reference specific sections if helpful.
+Provide a clear, comprehensive answer in English. Reference specific sections if helpful.
 If sub-questions were used, synthesize a unified answer.
 Use Markdown formatting for better readability."""
 

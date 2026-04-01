@@ -203,7 +203,7 @@ Question: {query}
 Document tree structure:
 {json.dumps(tree_without_text, indent=2, ensure_ascii=False)}
 
-Important: You MUST respond in Chinese (简体中文). Your thinking process should be in Chinese.
+Important: You MUST respond in English. Your thinking process should be in English.
 
 Please reply in the following JSON format:
 {{
@@ -246,15 +246,15 @@ Question: {query}
 Document tree structure:
 {json.dumps(tree_without_text, indent=2, ensure_ascii=False)}
 
-Important: You MUST respond in Chinese (简体中文). Your thinking process should be in Chinese.
+Important: You MUST respond in English. Your thinking process should be in English.
 
-First, output your thinking process in Chinese about which nodes are relevant to the question.
+First, output your thinking process in English about which nodes are relevant to the question.
 Then, at the very end, output the node list in this EXACT format on a new line:
 [NODE_LIST]: ["node_id_1", "node_id_2", "node_id_n"]
 
 Example output:
-根据文档结构，我需要找到与问题相关的节点...
-最相关的节点是X和Y，因为...
+Based on the document structure, I need to find nodes related to the question...
+The most relevant nodes are X and Y, because...
 [NODE_LIST]: ["node_x", "node_y"]
 """
         
@@ -514,7 +514,7 @@ class RAGService:
         
         # If node_map is empty but tree exists, prepare the document
         if tree and not node_map:
-            yield "[PREPARING]\n正在准备文档数据...\n"
+            yield "[PREPARING]\nPreparing document data...\n"
             try:
                 # Get page count
                 page_count = self.pageindex.get_pdf_page_count(doc.file_path)
@@ -529,7 +529,7 @@ class RAGService:
                     page_images = await self.pageindex.extract_pdf_page_images(doc.file_path, doc.images_dir)
                     self.store.cache_page_images(doc_id, page_images)
                 
-                yield "[PREPARED]\n准备完成！\n\n"
+                yield "[PREPARED]\nReady!\n\n"
             except Exception as e:
                 logger.error(f"Error preparing document: {e}")
                 yield f"[Error: Failed to prepare document: {e}]"
@@ -583,9 +583,9 @@ Question: {query}
 Context: {relevant_content}
 {history_context}
 
-Important: You MUST respond in Chinese (简体中文). All your output should be in Chinese.
+Important: You MUST respond in English. All your output should be in English.
 When mentioning any mathematical symbol, variable, subscript, superscript, or formula, you MUST wrap them in LaTeX delimiters: use $...$ for inline math (e.g. $s_j$, $f_{{MD}}$) and \\[...\\] for display math. NEVER output bare symbols like x_i without dollar signs.
-Provide a clear, concise answer in Chinese based only on the context provided. If you need to reference specific sections, mention the node IDs.
+Provide a clear, concise answer in English based only on the context provided. If you need to reference specific sections, mention the node IDs.
 Use Markdown formatting for better readability.
 """
             
@@ -617,9 +617,9 @@ Use Markdown formatting for better readability.
 
 Question: {query}
 
-Important: You MUST respond in Chinese (简体中文). All your output should be in Chinese.
+Important: You MUST respond in English. All your output should be in English.
 When mentioning any mathematical symbol, variable, subscript, superscript, or formula, you MUST wrap them in LaTeX delimiters: use $...$ for inline math (e.g. $s_j$, $f_{{MD}}$) and \\[...\\] for display math. NEVER output bare symbols like x_i without dollar signs.
-Provide a clear, concise answer in Chinese based only on the context provided.
+Provide a clear, concise answer in English based only on the context provided.
 Use Markdown formatting for better readability.
 """
             

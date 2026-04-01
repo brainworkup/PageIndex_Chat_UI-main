@@ -160,10 +160,10 @@ function showAnalysisBar(analysis) {
     body.innerHTML = `
         <div class="analysis-summary-text">${esc(analysis.summary || '')}</div>
         <div class="analysis-grid">
-            ${findings ? `<div class="analysis-card"><div class="analysis-card-title"><i class="bi bi-bookmark-star"></i> 关键发现</div><ul>${findings}</ul></div>` : ''}
-            ${topics ? `<div class="analysis-card"><div class="analysis-card-title"><i class="bi bi-tags"></i> 主要主题</div><ul>${topics}</ul></div>` : ''}
+            ${findings ? `<div class="analysis-card"><div class="analysis-card-title"><i class="bi bi-bookmark-star"></i> Key Findings</div><ul>${findings}</ul></div>` : ''}
+            ${topics ? `<div class="analysis-card"><div class="analysis-card-title"><i class="bi bi-tags"></i> Main Topics</div><ul>${topics}</ul></div>` : ''}
         </div>
-        ${questions ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:8px"><i class="bi bi-chat-left-quote"></i> 建议提问</div><div class="suggest-questions">${questions}</div></div>` : ''}
+        ${questions ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:8px"><i class="bi bi-chat-left-quote"></i> Suggested Questions</div><div class="suggest-questions">${questions}</div></div>` : ''}
     `;
 
     bar.classList.add('open');
@@ -304,7 +304,7 @@ function updateHighlightToggleBtn() {
     const btn = document.getElementById('highlightToggleBtn');
     if (btn) {
         btn.classList.toggle('active', !!activeHighlightNodeId);
-        btn.title = activeHighlightNodeId ? '清除高亮 (' + activeHighlightNodeId + ')' : '点击节点标签以高亮';
+        btn.title = activeHighlightNodeId ? 'Clear highlight (' + activeHighlightNodeId + ')' : 'Click a node tag to highlight';
     }
 }
 
@@ -349,7 +349,7 @@ function getOrCreateTimeline() {
         tl = document.createElement('div');
         tl.className = 'agent-timeline';
         tl.id = 'agentTimeline';
-        tl.innerHTML = '<div class="agent-timeline-header"><i class="bi bi-robot"></i> Agent 推理过程</div><div id="agentSteps"></div>';
+        tl.innerHTML = '<div class="agent-timeline-header"><i class="bi bi-robot"></i> Agent Reasoning Process</div><div id="agentSteps"></div>';
         if (ti) ti.before(tl); else mc.appendChild(tl);
     }
     return tl;
@@ -359,7 +359,7 @@ function renderAgentStep(d) {
     getOrCreateTimeline();
     const sc = document.getElementById('agentSteps');
     if (!sc) return;
-    const tool = d.tool === 'final_answer' ? '准备回答' : (d.tool || '');
+    const tool = d.tool === 'final_answer' ? 'Ready to answer' : (d.tool || '');
     const div = document.createElement('div');
     div.className = 'agent-step';
     div.innerHTML = `
@@ -381,7 +381,7 @@ function renderDecompose(d) {
     const box = document.createElement('div');
     box.className = 'decompose-box';
     const qs = (d.sub_questions || []).map((q, i) => `<div class="sub-question">${i+1}. ${esc(q)}</div>`).join('');
-    box.innerHTML = `<strong><i class="bi bi-diagram-3"></i> 问题分解 (${esc(d.synthesis_strategy || 'direct')})</strong>${qs}`;
+    box.innerHTML = `<strong><i class="bi bi-diagram-3"></i> Query Decomposition (${esc(d.synthesis_strategy || 'direct')})</strong>${qs}`;
     if (ti) ti.before(box); else mc.appendChild(box);
     scrollToBottom();
 }
@@ -392,10 +392,10 @@ function renderReflect(d) {
     box.className = 'reflect-box';
     const s = d.score || 0;
     const cls = s < 6 ? 'poor' : s < 8 ? 'medium' : 'good';
-    const action = d.action === 'accept' ? '回答质量满足要求' : '正在补充检索...';
+    const action = d.action === 'accept' ? 'Answer quality is satisfactory' : 'Supplementing retrieval...';
     const icon = d.action === 'accept' ? 'bi-check-circle-fill' : 'bi-arrow-repeat';
     const issues = (d.issues || []).map(i => `<li>${esc(i)}</li>`).join('');
-    box.innerHTML = `<strong><i class="bi bi-shield-check"></i> 自我检查</strong>
+    box.innerHTML = `<strong><i class="bi bi-shield-check"></i> Self-check</strong>
         <span class="reflect-score ${cls}">${s}/10</span>
         <span><i class="bi ${icon}"></i> ${action}</span>
         ${issues ? `<ul style="margin-top:6px;padding-left:18px;font-size:12px;color:#64748b">${issues}</ul>` : ''}`;
@@ -419,14 +419,14 @@ function displayHistory(history) {
             } else {
                 const tb = document.createElement('div');
                 tb.className = 'thinking-box';
-                tb.innerHTML = `<strong>推理过程</strong><span class="thinking-content">${esc(msg.thinking)}</span>`;
+                tb.innerHTML = `<strong>Reasoning Process</strong><span class="thinking-content">${esc(msg.thinking)}</span>`;
                 mc.appendChild(tb);
             }
         }
         if (msg.nodes?.length > 0) {
             const nb = document.createElement('div');
             nb.className = 'nodes-box';
-            nb.innerHTML = `<strong>检索节点:</strong> ${msg.nodes.map(n => `<span class="node-tag" onclick="showNodePreview('${n}')">${n}</span>`).join(' ')}`;
+            nb.innerHTML = `<strong>Retrieved nodes:</strong> ${msg.nodes.map(n => `<span class="node-tag" onclick="showNodePreview('${n}')">${n}</span>`).join(' ')}`;
             mc.appendChild(nb);
         }
         const div = document.createElement('div');
@@ -455,10 +455,10 @@ function parseAgentSteps(thinking) {
 function renderHistoryTimeline(container, steps) {
     const tl = document.createElement('div');
     tl.className = 'agent-timeline';
-    tl.innerHTML = '<div class="agent-timeline-header"><i class="bi bi-robot"></i> Agent 推理过程</div>';
+    tl.innerHTML = '<div class="agent-timeline-header"><i class="bi bi-robot"></i> Agent Reasoning Process</div>';
     const sc = document.createElement('div');
     steps.forEach(s => {
-        const tool = s.tool === 'final_answer' ? '准备回答' : s.tool;
+        const tool = s.tool === 'final_answer' ? 'Ready to answer' : s.tool;
         const div = document.createElement('div');
         div.className = 'agent-step';
         div.innerHTML = `
@@ -487,7 +487,7 @@ async function loadDocuments() {
 function renderDocuments(docs) {
     const c = document.getElementById('documentList');
     if (!docs.length) {
-        c.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.5)"><i class="bi bi-file-earmark" style="font-size:32px"></i><p style="margin-top:10px">暂无文档</p></div>';
+        c.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.5)"><i class="bi bi-file-earmark" style="font-size:32px"></i><p style="margin-top:10px">No documents</p></div>';
         return;
     }
     c.innerHTML = docs.map(d => `
@@ -499,15 +499,15 @@ function renderDocuments(docs) {
                 ${d.status==='error'&&d.error_message?`<span title="${d.error_message}"><i class="bi bi-info-circle"></i></span>`:''}
             </div>
             <div class="doc-actions">
-                ${d.status==='error'?`<button class="doc-action-btn retry" onclick="event.stopPropagation();retryUpload('${d.doc_id}','${d.filename}')"><i class="bi bi-arrow-clockwise"></i> 重新上传</button>`:''}
-                <button class="doc-action-btn delete" onclick="event.stopPropagation();deleteDocument('${d.doc_id}','${d.filename}')"><i class="bi bi-trash"></i> 删除</button>
+                ${d.status==='error'?`<button class="doc-action-btn retry" onclick="event.stopPropagation();retryUpload('${d.doc_id}','${d.filename}')"><i class="bi bi-arrow-clockwise"></i> Re-upload</button>`:''}
+                <button class="doc-action-btn delete" onclick="event.stopPropagation();deleteDocument('${d.doc_id}','${d.filename}')"><i class="bi bi-trash"></i> Delete</button>
             </div>
         </div>`).join('');
     c.querySelectorAll('.doc-item').forEach(el => el.addEventListener('click', () => selectDocument(el.dataset.docId)));
 }
 
 function statusText(s) {
-    return {pending:'等待处理',indexing:'正在索引...',indexed:'索引完成',ready:'就绪',error:'错误'}[s]||s;
+    return {pending:'Pending',indexing:'Indexing...',indexed:'Indexed',ready:'Ready',error:'Error'}[s]||s;
 }
 
 async function selectDocument(docId) {
@@ -525,7 +525,7 @@ async function selectDocument(docId) {
 }
 
 async function uploadDocument(file) {
-    if (!file || !file.name.toLowerCase().endsWith('.pdf')) { alert('请选择 PDF 文件'); return; }
+    if (!file || !file.name.toLowerCase().endsWith('.pdf')) { alert('Please select a PDF file'); return; }
     const fd = new FormData(); fd.append('file', file);
     try {
         const r = await fetch('/api/documents/upload', { method:'POST', body:fd });
@@ -534,20 +534,20 @@ async function uploadDocument(file) {
             currentDocId = d.document.doc_id;
             loadDocuments(); hideEmptyState(); clearChatDisplay(); hideAnalysisBar();
             pollDocumentStatus(d.document.doc_id);
-        } else { alert('上传失败: ' + d.error); }
-    } catch (e) { console.error('Upload error:', e); alert('上传失败'); }
+        } else { alert('Upload failed: ' + d.error); }
+    } catch (e) { console.error('Upload error:', e); alert('Upload failed'); }
 }
 
 async function deleteDocument(docId, filename) {
-    if (!confirm(`确定要删除文档 "${filename}" 吗？`)) return;
+    if (!confirm(`Are you sure you want to delete "${filename}"?`)) return;
     try {
         const r = await fetch(`/api/documents/${docId}`, {method:'DELETE'});
         const d = await r.json();
         if (d.success) {
             if (currentDocId===docId) { currentDocId=null; clearChatDisplay(); hideAnalysisBar(); }
-            loadDocuments(); showNotification('文档已删除');
-        } else { alert('删除失败: '+d.error); }
-    } catch (e) { alert('删除失败'); }
+            loadDocuments(); showNotification('Document deleted');
+        } else { alert('Delete failed: '+d.error); }
+    } catch (e) { alert('Delete failed'); }
 }
 
 function retryUpload(docId) { deleteDocForRetry(docId); }
@@ -556,7 +556,7 @@ async function deleteDocForRetry(docId) {
         const r = await fetch(`/api/documents/${docId}`, {method:'DELETE'});
         const d = await r.json();
         if (d.success) { if (currentDocId===docId){currentDocId=null;clearChatDisplay();} loadDocuments(); document.getElementById('fileInput')?.click(); }
-    } catch (e) { alert('删除失败'); }
+    } catch (e) { alert('Delete failed'); }
 }
 
 async function pollDocumentStatus(docId) {
@@ -566,18 +566,18 @@ async function pollDocumentStatus(docId) {
             const d = await r.json();
             loadDocuments();
             if (d.status === 'ready') {
-                addSystemMessage('文档索引完成！正在生成智能分析...');
+                addSystemMessage('Document indexing complete! Generating intelligent analysis...');
                 // Auto-load analysis (with retries since it runs after 'ready')
                 const analysis = await loadAnalysis(docId, 5);
                 if (analysis) {
                     showAnalysisBar(analysis);
-                    addSystemMessage('文档智能分析已生成，可以开始对话了！');
+                    addSystemMessage('Document analysis generated. You can start chatting!');
                 } else {
-                    addSystemMessage('文档已就绪，可以开始对话了。');
+                    addSystemMessage('Document is ready. You can start chatting.');
                 }
                 return;
             }
-            if (d.status === 'error') { addSystemMessage('文档索引失败: ' + d.error_message); return; }
+            if (d.status === 'error') { addSystemMessage('Document indexing failed: ' + d.error_message); return; }
             setTimeout(poll, 2000);
         } catch (e) { console.error('Poll error:', e); }
     };
@@ -612,7 +612,7 @@ function sendMessage() {
     const input = document.getElementById('chatInput');
     const msg = input.value.trim();
     if (!msg || isStreaming) return;
-    if (!currentDocId) { alert('请先选择或上传文档'); return; }
+    if (!currentDocId) { alert('Please select or upload a document first'); return; }
 
     addUserMessage(msg);
     input.value = '';
@@ -646,14 +646,14 @@ function updateStatus(status) {
         const rc = document.getElementById('responseContent');
         if (rc) rc.innerHTML = '';
     }
-    if (st) st.textContent = {preparing:'正在准备文档数据...',prepared:'准备完成',searching:'正在检索相关内容...',answering:'正在生成回答...',retrying:'Agent 正在补充检索...',retry_answering:'正在重新生成回答...'}[status] || '';
+    if (st) st.textContent = {preparing:'Preparing document data...',prepared:'Ready',searching:'Searching for relevant content...',answering:'Generating answer...',retrying:'Agent supplementing retrieval...',retry_answering:'Regenerating answer...'}[status] || '';
 }
 
 function showThinking(content) {
     const ti = document.getElementById('typingIndicator');
     if (ti) {
         const b = document.createElement('div'); b.className='thinking-box'; b.id='thinkingBox';
-        b.innerHTML = `<strong>推理过程</strong><span class="thinking-content">${content}</span>`;
+        b.innerHTML = `<strong>Reasoning Process</strong><span class="thinking-content">${content}</span>`;
         ti.before(b);
     }
 }
@@ -664,7 +664,7 @@ function appendToThinking(content) {
         const ti = document.getElementById('typingIndicator');
         const mc = document.getElementById('chatMessages');
         b = document.createElement('div'); b.className='thinking-box'; b.id='thinkingBox';
-        b.innerHTML = '<strong>推理过程</strong><span class="thinking-content"></span>';
+        b.innerHTML = '<strong>Reasoning Process</strong><span class="thinking-content"></span>';
         if (ti) ti.before(b); else mc.appendChild(b);
     }
     const tc = b.querySelector('.thinking-content');
@@ -674,7 +674,7 @@ function appendToThinking(content) {
 function showNodes(nodes) {
     const anchor = document.getElementById('thinkingBox') || document.getElementById('agentTimeline');
     if (anchor) {
-        const h = `<div class="nodes-box"><strong>检索节点:</strong> ${nodes.map(n=>`<span class="node-tag" onclick="showNodePreview('${n}')">${n}</span>`).join(' ')}</div>`;
+        const h = `<div class="nodes-box"><strong>Retrieved nodes:</strong> ${nodes.map(n=>`<span class="node-tag" onclick="showNodePreview('${n}')">${n}</span>`).join(' ')}</div>`;
         anchor.insertAdjacentHTML('afterend', h);
     }
 }
@@ -713,7 +713,7 @@ function finishResponse(wasStopped = false) {
     document.getElementById('typingIndicator')?.remove();
     const rc = document.getElementById('responseContent');
     if (rc && _streamingRawText) {
-        const finalText = wasStopped ? _streamingRawText + '\n\n---\n*（已停止生成）*' : _streamingRawText;
+        const finalText = wasStopped ? _streamingRawText + '\n\n---\n*(generation stopped)*' : _streamingRawText;
         rc.innerHTML = renderMarkdown(finalText);
         renderMathInContainer(rc);
     }
@@ -726,7 +726,7 @@ function finishResponse(wasStopped = false) {
 function showError(msg) {
     isStreaming = false; updateSendButton();
     document.getElementById('typingIndicator')?.remove();
-    addSystemMessage('错误: ' + msg);
+    addSystemMessage('Error: ' + msg);
 }
 
 // ====================== Messages ======================
