@@ -27,7 +27,7 @@ class PageIndexService:
     
     def _get_client(self, model_type: str = 'text') -> AsyncOpenAI:
         """Get OpenAI client with current configuration"""
-        config = config_manager.get_model_config(model_type)
+        config = config_manager.get_runtime_model_config(model_type)
         return AsyncOpenAI(
             api_key=config.get('api_key'),
             base_url=config.get('base_url')
@@ -35,7 +35,7 @@ class PageIndexService:
     
     def _get_model_name(self, model_type: str = 'text') -> str:
         """Get model name for the given type"""
-        config = config_manager.get_model_config(model_type)
+        config = config_manager.get_runtime_model_config(model_type)
         return config.get('name', 'gpt-4o-mini')
     
     async def call_llm_stream(self, prompt: str, model_type: str = 'text') -> Generator[str, None, None]:

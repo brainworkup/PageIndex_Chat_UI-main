@@ -13,8 +13,12 @@ import json
 from typing import Dict, Optional
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
+from dotenv import load_dotenv
 
 CONFIG_FILE = Path(__file__).parent / 'config.json'
+DOTENV_FILE = Path(__file__).parent / '.env'
+
+load_dotenv(DOTENV_FILE, override=False)
 
 # ============================================================
 # Default Server Configuration (hardcoded defaults)
@@ -107,6 +111,47 @@ class ConfigManager:
     def get_model_config(self, model_type: str) -> Dict:
         """Get model configuration by type"""
         return self.config.models.get(model_type, DEFAULT_MODELS.get(model_type, {}))
+
+    @staticmethod
+    def _first_non_empty(*values) -> str:
+        """Return the first non-empty string-like value."""
+        for value in values:
+            if value is None:
+                continue
+            if isinstance(value, str):
+                value = value.strip()
+            if value:
+                return value
+        return ''
+
+    def get_runtime_model_config(self, model_type: str) -> Dict:
+        """Get model configuration with environment fallback for server-side use."""
+        config = dict(self.get_model_config(model_type) or {})
+        model_prefix = model_type.upper()
+
+        config['api_key'] = self._first_non_empty(
+            config.get('api_key'),
+            os.getenv(f'{model_prefix}_MODEL_API_KEY'),
+            os.getenv(f'{model_prefix}_API_KEY'),
+            os.getenv('PAGEINDEX_API_KEY'),
+            os.getenv('INDEX_API_KEY'),
+            os.getenv('OPENAI_API_KEY'),
+        )
+        config['base_url'] = self._first_non_empty(
+            config.get('base_url'),
+            os.getenv(f'{model_prefix}_MODEL_BASE_URL'),
+            os.getenv(f'{model_prefix}_BASE_URL'),
+            os.getenv('PAGEINDEX_BASE_URL'),
+            os.getenv('INDEX_BASE_URL'),
+            os.getenv('OPENAI_BASE_URL'),
+            DEFAULT_MODELS.get(model_type, {}).get('base_url'),
+        )
+        config['name'] = self._first_non_empty(
+            config.get('name'),
+            os.getenv(f'{model_prefix}_MODEL_NAME'),
+            DEFAULT_MODELS.get(model_type, {}).get('name'),
+        )
+        return config
     
     def set_model_config(self, model_type: str, config: Dict):
         """Set model configuration"""

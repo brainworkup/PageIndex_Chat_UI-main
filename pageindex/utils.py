@@ -30,11 +30,21 @@ def set_api_config(api_key: str, base_url: str):
 
 def get_api_key():
     """Get API key from global config or environment"""
-    return _global_api_key or os.getenv("INDEX_API_KEY")  # INDEX_API_KEY can be set if you want to use a different key, or use default
+    return (
+        _global_api_key
+        or os.getenv("PAGEINDEX_API_KEY")
+        or os.getenv("INDEX_API_KEY")
+        or os.getenv("OPENAI_API_KEY")
+    )
 
 def get_base_url():
     """Get base URL from global config or environment"""
-    return _global_base_url or os.getenv("INDEX_BASE_URL")  # INDEX_BASE_URL can be set if you want to use a different base URL, or use default
+    return (
+        _global_base_url
+        or os.getenv("PAGEINDEX_BASE_URL")
+        or os.getenv("INDEX_BASE_URL")
+        or os.getenv("OPENAI_BASE_URL")
+    )
 
 def count_tokens(text, model=None):
     if not text:

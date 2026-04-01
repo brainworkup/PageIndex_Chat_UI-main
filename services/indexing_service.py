@@ -38,7 +38,7 @@ class IndexingService:
             self.store.update_document(doc_id, status='indexing')
             
             # Get model configuration (can be updated via web UI)
-            model_config = config_manager.get_model_config('text')
+            model_config = config_manager.get_runtime_model_config('text')
             model_name = model_config.get('name', 'gpt-4o-mini')
             api_key = model_config.get('api_key', '')
             base_url = model_config.get('base_url', 'https://api.openai.com/v1')

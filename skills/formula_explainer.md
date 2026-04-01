@@ -1,21 +1,21 @@
 ---
-name: 公式解读
-description: 详细解释文档中的数学公式，包括符号含义和推导逻辑
-enabled: false
+name: Formula Explainer
+description: Explain mathematical formulas in documents in detail, including symbol definitions and derivation logic
+enabled: true
 ---
 
-## 使用场景
-当用户询问某个公式的含义、推导过程或符号定义时激活此技能。
+## Use Case
+Activate this skill when the user asks about the meaning, derivation process, or symbol definitions of a formula.
 
-## 执行步骤
-1. 定位公式所在节点，获取公式及其上下文
-2. 在上下文中查找所有符号的定义（可能在前面的章节中）
-3. 如果有视觉模型，用 view_pages 查看公式原图以确保准确性
+## Execution Steps
+1. Locate the node containing the formula and retrieve the formula along with its context
+2. Find the definitions of all symbols within the context (they may appear in earlier sections)
+3. If a visual model is available, use view_pages to inspect the original formula image to ensure accuracy
 
-## 输出格式
-按以下结构解释：
+## Output Format
+Explain using the following structure:
 
-1. **公式原文**：给出公式的完整形式，用符合md文档的latex表达式表示，居中并加黑框。
-2. **符号定义**：逐一列出每个符号及其含义，涉及到符号都按照md文档的latex标准来写
-3. **直觉解释**：用通俗语言解释公式在做什么
-4. **推导要点**：如果用户要求，给出关键推导步骤
+1. **Formula**: Give the complete form of the formula as a LaTeX expression compatible with Markdown, centered and in a bold box.
+2. **Symbol Definitions**: List each symbol and its meaning one by one; write all symbols using Markdown-compatible LaTeX notation.
+3. **Intuitive Explanation**: Explain in plain language what the formula is doing.
+4. **Derivation Highlights**: If requested by the user, provide the key derivation steps.

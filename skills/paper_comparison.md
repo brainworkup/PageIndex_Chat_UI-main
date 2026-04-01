@@ -1,7 +1,7 @@
 ---
 name: 论文对比分析
 description: 系统对比文档中不同方法、模型或章节的异同
-enabled: false
+enabled: true
 ---
 
 ## 使用场景

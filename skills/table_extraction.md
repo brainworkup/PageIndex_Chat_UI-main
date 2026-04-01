@@ -1,7 +1,7 @@
 ---
 name: 表格数据提取（仅视觉模型）
 description: 从文档中定位并提取表格数据，以标准 Markdown 表格格式输出
-enabled: false
+enabled: true
 ---
 
 ## 使用场景
