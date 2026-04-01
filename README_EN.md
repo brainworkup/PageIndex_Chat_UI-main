@@ -15,6 +15,12 @@
 
 ---
 
+## 📢 Recent Changes
+
+- **English Localization (2025-04)**: The UI, agent prompts, skill descriptions, and all system output now default to English. The Chinese README (`README.md`) remains available for Chinese-speaking users.
+
+---
+
 ## 📖 Project Overview
 
 **PageIndex Chat UI** is an intelligent Q&A system designed for PDF documents. It is built upon the core indexing algorithm of the open-source project PageIndex, with a complete **Agentic RAG** interaction interface layered on top.
