@@ -85,7 +85,7 @@ All instantiated at module level and imported throughout:
 
 ## Important Conventions
 
-- All LLM prompts instruct the model to respond in **Chinese (简体中文)** with LaTeX math delimiters. This is enforced by `LANG_INSTRUCTION` in `agent.py`.
+- All LLM prompts instruct the model to respond in **English** with LaTeX math delimiters. This is enforced by `LANG_INSTRUCTION` in `agent.py`.
 - The project uses **no embedding models or vector databases**. All retrieval is LLM-driven tree navigation.
 - `async_mode='threading'` for Flask-SocketIO — socket handlers spin up their own asyncio event loops.
 - Node IDs follow the format `node_XXXX` (zero-padded).
