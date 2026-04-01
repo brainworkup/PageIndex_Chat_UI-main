@@ -774,12 +774,12 @@ function clearChatDisplay() {
         <div class="empty-state" id="emptyState">
             <div class="empty-hero-icon"><i class="bi bi-robot"></i></div>
             <h4>PageIndex Agent</h4>
-            <p>上传 PDF 文档，智能体会自动分析文档结构并提供深度问答服务</p>
+            <p>Upload a PDF document and the agent will automatically analyze its structure and provide in-depth Q&A</p>
             <div class="empty-features">
-                <div class="empty-feature"><i class="bi bi-diagram-3"></i><span>多步推理</span></div>
-                <div class="empty-feature"><i class="bi bi-tools"></i><span>多工具协作</span></div>
-                <div class="empty-feature"><i class="bi bi-shield-check"></i><span>自我反思</span></div>
-                <div class="empty-feature"><i class="bi bi-lightbulb"></i><span>主动分析</span></div>
+                <div class="empty-feature"><i class="bi bi-diagram-3"></i><span>Multi-step Reasoning</span></div>
+                <div class="empty-feature"><i class="bi bi-tools"></i><span>Multi-tool Collaboration</span></div>
+                <div class="empty-feature"><i class="bi bi-shield-check"></i><span>Self-reflection</span></div>
+                <div class="empty-feature"><i class="bi bi-lightbulb"></i><span>Proactive Analysis</span></div>
             </div>
         </div>`;
 }
@@ -800,8 +800,8 @@ window.saveSettings = async function () {
         await fetch('/api/config/models/text', {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(tc)});
         await fetch('/api/config/models/vision', {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(vc)});
         bootstrap.Modal.getInstance(document.getElementById('settingsModal'))?.hide();
-        showNotification('配置已保存');
-    } catch { alert('保存配置失败'); }
+        showNotification('Settings saved');
+    } catch { alert('Failed to save settings'); }
 };
 
 // ====================== Node Preview ======================
@@ -816,7 +816,7 @@ async function showNodePreview(nodeId) {
         } catch { return; }
     }
     const info = nodeMapCache[currentDocId]?.[nodeId];
-    if (!info) { showNotification('未找到节点信息'); return; }
+    if (!info) { showNotification('Node information not found'); return; }
     showPagePreviewModal(nodeId, info, allPagesCache[currentDocId]);
 }
 
@@ -857,16 +857,16 @@ function showPagePreviewModal(nodeId, nodeInfo, allPages) {
             <div class="page-preview-header">
                 <h5 class="page-preview-title"></h5>
                 <div class="page-preview-header-actions">
-                    <button class="highlight-toggle-btn" id="highlightToggleBtn" onclick="toggleHighlights()" title="点击节点标签以高亮"><i class="bi bi-highlighter"></i></button>
+                    <button class="highlight-toggle-btn" id="highlightToggleBtn" onclick="toggleHighlights()" title="Click a node tag to highlight"><i class="bi bi-highlighter"></i></button>
                     <button class="page-preview-close" onclick="closePagePreviewModal()"><i class="bi bi-x-lg"></i></button>
                 </div>
             </div>
             <div class="node-info-card" id="nodeInfoCard"></div>
             <div class="page-preview-body"><div class="page-preview-images"></div></div>
             <div class="page-preview-footer"><div class="page-preview-nav">
-                <button class="page-nav-btn" id="prevPageBtn" onclick="navPage(-1)"><i class="bi bi-chevron-left"></i> 上一页</button>
+                <button class="page-nav-btn" id="prevPageBtn" onclick="navPage(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
                 <span class="page-indicator" id="pageIndicator"></span>
-                <button class="page-nav-btn" id="nextPageBtn" onclick="navPage(1)">下一页 <i class="bi bi-chevron-right"></i></button>
+                <button class="page-nav-btn" id="nextPageBtn" onclick="navPage(1)">Next <i class="bi bi-chevron-right"></i></button>
             </div></div></div>`;
         document.body.appendChild(modal);
     }
@@ -880,15 +880,15 @@ function showPagePreviewModal(nodeId, nodeInfo, allPages) {
     const currentEnd = nodeInfo.end_index || currentStart;
     const nodeColor = getNodeColor(nodeId, nMap);
 
-    modal.querySelector('.page-preview-title').textContent = `PDF 预览`;
+    modal.querySelector('.page-preview-title').textContent = `PDF Preview`;
 
     const infoCard = modal.querySelector('#nodeInfoCard');
     infoCard.innerHTML = `
         <div class="node-info-badge" style="background:${nodeColor.bg};color:${nodeColor.text}">${nodeId}</div>
         <div class="node-info-detail">
-            <div class="node-info-title">${esc(nodeInfo.title || '未命名节点')}</div>
+            <div class="node-info-title">${esc(nodeInfo.title || 'Unnamed Node')}</div>
             <div class="node-info-meta">
-                <span><i class="bi bi-file-earmark"></i> 第 ${currentStart}–${currentEnd} 页</span>
+                <span><i class="bi bi-file-earmark"></i> Pages ${currentStart}–${currentEnd}</span>
             </div>
             ${nodeInfo.summary ? `<div class="node-info-summary">${esc(nodeInfo.summary)}</div>` : ''}
         </div>`;
@@ -896,7 +896,7 @@ function showPagePreviewModal(nodeId, nodeInfo, allPages) {
     const imgs = modal.querySelector('.page-preview-images');
 
     if (!allPages?.length) {
-        imgs.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-secondary)">无页面图片</div>';
+        imgs.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-secondary)">No page images</div>';
     } else {
         imgs.innerHTML = allPages.map((p, i) => {
             const pageNum = p.page;
@@ -908,13 +908,13 @@ function showPagePreviewModal(nodeId, nodeInfo, allPages) {
                 return `<span class="page-node-tag${isActive?' active-node':''}" data-node-id="${n.id}" `
                      + `style="background:${n.color.bg};color:${n.color.text}" `
                      + `onclick="event.stopPropagation();activateNodeHighlight('${n.id}')" `
-                     + `title="点击高亮 ${esc(n.id + ': ' + n.title)}">`
+                     + `title="Click to highlight ${esc(n.id + ': ' + n.title)}">">`
                      + `<span class="page-node-tag-id">${n.id}</span> ${esc(label)}</span>`;
             }).join('');
             return `<div class="page-image-container${isCurrent?' current-node-page':''}" data-index="${i}">`
                  + `<img src="${p.url}" alt="Page ${pageNum}" class="page-preview-image" onclick="openFullscreen('${p.url}')">`
                  + (tags ? `<div class="page-node-tags">${tags}</div>` : '')
-                 + `<div class="page-number">第 ${pageNum} 页</div></div>`;
+                 + `<div class="page-number">Page ${pageNum}</div></div>`;
         }).join('');
     }
 
@@ -1039,17 +1039,17 @@ function renderSkillsList() {
     const list = document.getElementById('skillsList');
     if (!list) return;
     if (_skillsCache.length === 0) {
-        list.innerHTML = '<div style="padding:8px 10px;font-size:11px;color:rgba(255,255,255,0.35)">暂无 Skill，点击 + 创建</div>';
+        list.innerHTML = '<div style="padding:8px 10px;font-size:11px;color:rgba(255,255,255,0.35)">No skills yet. Click + to create one.</div>';
         return;
     }
     list.innerHTML = _skillsCache.map(s => `
         <div class="skill-item" data-id="${esc(s.skill_id)}">
-            <div class="skill-toggle ${s.enabled ? 'active' : ''}" onclick="event.stopPropagation(); toggleSkillEnabled('${esc(s.skill_id)}', ${!s.enabled})" title="${s.enabled ? '已启用' : '已禁用'}"></div>
+            <div class="skill-toggle ${s.enabled ? 'active' : ''}" onclick="event.stopPropagation(); toggleSkillEnabled('${esc(s.skill_id)}', ${!s.enabled})" title="${s.enabled ? 'Enabled' : 'Disabled'}"></div>
             <div class="skill-info" onclick="openSkillEditor('${esc(s.skill_id)}')">
                 <div class="skill-name">${esc(s.name)}</div>
-                <div class="skill-desc">${esc(s.description || '无描述')}</div>
+                <div class="skill-desc">${esc(s.description || 'No description')}</div>
             </div>
-            <button class="skill-edit-btn" onclick="event.stopPropagation(); openSkillEditor('${esc(s.skill_id)}')" title="编辑">
+            <button class="skill-edit-btn" onclick="event.stopPropagation(); openSkillEditor('${esc(s.skill_id)}')" title="Edit">
                 <i class="bi bi-pencil"></i>
             </button>
         </div>
@@ -1085,14 +1085,14 @@ function openSkillEditor(skillId) {
     if (skillId) {
         const skill = _skillsCache.find(s => s.skill_id === skillId);
         if (!skill) return;
-        titleEl.textContent = '编辑 Skill';
+        titleEl.textContent = 'Edit Skill';
         nameEl.value = skill.name;
         descEl.value = skill.description || '';
         contentEl.value = skill.content || '';
         idEl.value = skill.skill_id;
         deleteBtn.style.display = 'inline-flex';
     } else {
-        titleEl.textContent = '新建 Skill';
+        titleEl.textContent = 'New Skill';
         nameEl.value = '';
         descEl.value = '';
         contentEl.value = '';
@@ -1109,7 +1109,7 @@ async function saveSkill() {
     const content = document.getElementById('skillEditorContent')?.value?.trim();
     const skillId = idEl?.value;
 
-    if (!name) { alert('请输入 Skill 名称'); return; }
+    if (!name) { alert('Please enter a skill name'); return; }
 
     try {
         if (skillId) {
@@ -1127,22 +1127,22 @@ async function saveSkill() {
         }
         bootstrap.Modal.getInstance(document.getElementById('skillEditorModal'))?.hide();
         await loadSkills();
-        showNotification(skillId ? 'Skill 已更新' : 'Skill 已创建');
+        showNotification(skillId ? 'Skill updated' : 'Skill created');
     } catch (e) {
         console.error('Save skill failed:', e);
-        alert('保存失败: ' + e.message);
+        alert('Save failed: ' + e.message);
     }
 }
 
 async function deleteCurrentSkill() {
     const skillId = document.getElementById('skillEditorId')?.value;
     if (!skillId) return;
-    if (!confirm('确定要删除此 Skill 吗？')) return;
+    if (!confirm('Are you sure you want to delete this skill?')) return;
     try {
         await fetch(`/api/skills/${skillId}`, { method: 'DELETE' });
         bootstrap.Modal.getInstance(document.getElementById('skillEditorModal'))?.hide();
         await loadSkills();
-        showNotification('Skill 已删除');
+        showNotification('Skill deleted');
     } catch (e) {
         console.error('Delete skill failed:', e);
     }
@@ -1150,7 +1150,7 @@ async function deleteCurrentSkill() {
 
 async function uploadSkillFile(file) {
     if (!file || !file.name.endsWith('.md')) {
-        alert('请选择 .md 文件');
+        alert('Please select a .md file');
         return;
     }
     const formData = new FormData();
@@ -1160,13 +1160,13 @@ async function uploadSkillFile(file) {
         const data = await res.json();
         if (data.success) {
             await loadSkills();
-            showNotification('Skill 上传成功');
+            showNotification('Skill uploaded successfully');
         } else {
-            alert('上传失败: ' + (data.error || '未知错误'));
+            alert('Upload failed: ' + (data.error || 'Unknown error'));
         }
     } catch (e) {
         console.error('Upload skill failed:', e);
-        alert('上传失败: ' + e.message);
+        alert('Upload failed: ' + e.message);
     }
 }
 

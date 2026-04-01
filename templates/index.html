@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -529,10 +529,10 @@
                     <i class="bi bi-chevron-up chevron"></i>
                 </span>
                 <span class="skills-header-actions" onclick="event.stopPropagation()">
-                    <button class="skill-action-btn" title="上传 Skill (.md)" onclick="document.getElementById('skillFileInput').click()">
+                    <button class="skill-action-btn" title="Upload Skill (.md)" onclick="document.getElementById('skillFileInput').click()">
                         <i class="bi bi-upload"></i>
                     </button>
-                    <button class="skill-action-btn" title="新建 Skill" onclick="openSkillEditor()">
+                    <button class="skill-action-btn" title="New Skill" onclick="openSkillEditor()">
                         <i class="bi bi-plus-lg"></i>
                     </button>
                 </span>
@@ -543,8 +543,8 @@
 
         <div class="upload-area" id="uploadArea">
             <i class="bi bi-cloud-upload"></i>
-            <div>上传 PDF 文档</div>
-            <small style="color: rgba(255,255,255,0.5);">点击或拖拽文件</small>
+            <div>Upload PDF Document</div>
+            <small style="color: rgba(255,255,255,0.5);">Click or drag file</small>
         </div>
         <input type="file" id="fileInput" accept=".pdf" style="display: none;">
     </div>
@@ -556,8 +556,8 @@
             <div class="top-bar-main">
                 <div class="top-bar-left">
                     <div class="model-toggle">
-                        <button id="textModelBtn" class="active" type="button"><i class="bi bi-chat-text"></i> 文本模型</button>
-                        <button id="visionModelBtn" type="button"><i class="bi bi-eye"></i> 视觉模型</button>
+                        <button id="textModelBtn" class="active" type="button"><i class="bi bi-chat-text"></i> Text Model</button>
+                        <button id="visionModelBtn" type="button"><i class="bi bi-eye"></i> Vision Model</button>
                     </div>
                     <button class="settings-btn" id="settingsBtn" type="button"><i class="bi bi-gear"></i></button>
                 </div>
@@ -569,27 +569,27 @@
                         </div>
                     </div>
                     <label class="memory-check">
-                        <input type="checkbox" id="memoryToggle" checked> 对话记忆
+                        <input type="checkbox" id="memoryToggle" checked> Conversation Memory
                     </label>
                 </div>
             </div>
             <div class="agent-banner" id="agentBanner">
                 <span class="agent-badge-pill">AGENT</span>
                 <span class="agent-banner-dot"></span>
-                智能体模式已启用 — 多步推理 · 查询分解 · 自我反思 · 多工具协作
+                Agent mode enabled — Multi-step Reasoning · Query Decomposition · Self-Reflection · Multi-tool Collaboration
             </div>
         </div>
 
         <!-- Analysis Mini Button (when bar is collapsed) -->
         <button class="analysis-mini-btn" id="analysisMiniBtn" onclick="toggleAnalysisBar()">
-            <i class="bi bi-lightbulb-fill"></i> 查看文档智能分析
+            <i class="bi bi-lightbulb-fill"></i> View Document Analysis
             <i class="bi bi-chevron-down" style="margin-left:auto"></i>
         </button>
 
         <!-- Analysis Bar (persistent, between top bar and chat) -->
         <div class="analysis-bar" id="analysisBar">
             <div class="analysis-bar-toggle" onclick="toggleAnalysisBar()">
-                <span class="analysis-bar-toggle-left"><i class="bi bi-lightbulb-fill"></i> 文档智能分析</span>
+                <span class="analysis-bar-toggle-left"><i class="bi bi-lightbulb-fill"></i> Document Analysis</span>
                 <i class="bi bi-chevron-up chevron"></i>
             </div>
             <div class="analysis-bar-body" id="analysisBarBody"></div>
@@ -601,12 +601,12 @@
                 <div class="empty-state" id="emptyState">
                     <div class="empty-hero-icon"><i class="bi bi-robot"></i></div>
                     <h4>PageIndex Agent</h4>
-                    <p>上传 PDF 文档，智能体会自动分析文档结构并提供深度问答服务</p>
+                    <p>Upload a PDF document and the agent will automatically analyze its structure and provide in-depth Q&A</p>
                     <div class="empty-features">
-                        <div class="empty-feature"><i class="bi bi-diagram-3"></i><span>多步推理</span></div>
-                        <div class="empty-feature"><i class="bi bi-tools"></i><span>多工具协作</span></div>
-                        <div class="empty-feature"><i class="bi bi-shield-check"></i><span>自我反思</span></div>
-                        <div class="empty-feature"><i class="bi bi-lightbulb"></i><span>主动分析</span></div>
+                        <div class="empty-feature"><i class="bi bi-diagram-3"></i><span>Multi-step Reasoning</span></div>
+                        <div class="empty-feature"><i class="bi bi-tools"></i><span>Multi-tool Collaboration</span></div>
+                        <div class="empty-feature"><i class="bi bi-shield-check"></i><span>Self-Reflection</span></div>
+                        <div class="empty-feature"><i class="bi bi-lightbulb"></i><span>Proactive Analysis</span></div>
                     </div>
                 </div>
             </div>
@@ -616,7 +616,7 @@
         <div class="input-area">
             <div class="input-container">
                 <div class="input-wrapper">
-                    <textarea class="chat-input" id="chatInput" placeholder="输入您的问题..." rows="1"></textarea>
+                    <textarea class="chat-input" id="chatInput" placeholder="Type your question..." rows="1"></textarea>
                 </div>
                 <button class="send-btn" id="sendBtn" type="button"><i class="bi bi-send"></i></button>
             </div>
@@ -628,30 +628,30 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">模型配置</h5>
+                    <h5 class="modal-title">Model Settings</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <ul class="nav nav-tabs mb-3" id="modelTabs">
-                        <li class="nav-item"><a class="nav-link active" href="#textConfig" data-bs-toggle="tab">文本模型</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#visionConfig" data-bs-toggle="tab">视觉模型</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#textConfig" data-bs-toggle="tab">Text Model</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#visionConfig" data-bs-toggle="tab">Vision Model</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="textConfig">
-                            <div class="mb-3"><label class="form-label">模型名称</label><input type="text" class="form-control" id="textModelName" placeholder="例如: gpt-4o-mini"></div>
+                            <div class="mb-3"><label class="form-label">Model Name</label><input type="text" class="form-control" id="textModelName" placeholder="e.g. gpt-4o-mini"></div>
                             <div class="mb-3"><label class="form-label">API Key</label><input type="password" class="form-control" id="textApiKey" placeholder="sk-..."></div>
                             <div class="mb-3"><label class="form-label">Base URL</label><input type="text" class="form-control" id="textBaseUrl" placeholder="https://api.openai.com/v1"></div>
                         </div>
                         <div class="tab-pane fade" id="visionConfig">
-                            <div class="mb-3"><label class="form-label">模型名称</label><input type="text" class="form-control" id="visionModelName" placeholder="例如: gpt-4.1"></div>
+                            <div class="mb-3"><label class="form-label">Model Name</label><input type="text" class="form-control" id="visionModelName" placeholder="e.g. gpt-4.1"></div>
                             <div class="mb-3"><label class="form-label">API Key</label><input type="password" class="form-control" id="visionApiKey" placeholder="sk-..."></div>
                             <div class="mb-3"><label class="form-label">Base URL</label><input type="text" class="form-control" id="visionBaseUrl" placeholder="https://api.openai.com/v1"></div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="saveSettingsBtn">保存配置</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
                 </div>
             </div>
         </div>
@@ -664,39 +664,39 @@
                 <div class="modal-header">
                     <h5 class="modal-title skill-editor-header">
                         <i class="bi bi-lightning-charge-fill"></i>
-                        <span id="skillEditorTitle">新建 Skill</span>
+                        <span id="skillEditorTitle">New Skill</span>
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="skillEditorId">
                     <div class="mb-3">
-                        <label class="form-label">名称</label>
-                        <input type="text" class="form-control" id="skillEditorName" placeholder="例如: 论文对比分析">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" id="skillEditorName" placeholder="e.g. Paper Comparative Analysis">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">描述</label>
-                        <input type="text" class="form-control" id="skillEditorDesc" placeholder="简短描述此 Skill 的功能">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-control" id="skillEditorDesc" placeholder="Brief description of this skill's function">
                     </div>
                     <div class="mb-3">
                         <label class="form-label d-flex justify-content-between align-items-center">
-                            <span>指令内容 (Markdown)</span>
+                            <span>Instructions (Markdown)</span>
                             <button class="btn btn-sm btn-outline-secondary" type="button" onclick="toggleSkillPreview()" id="skillPreviewToggle" style="font-size:12px;padding:2px 10px;">
-                                <i class="bi bi-eye"></i> 预览
+                                <i class="bi bi-eye"></i> Preview
                             </button>
                         </label>
                         <textarea class="form-control skill-md-editor" id="skillEditorContent" rows="10"
-                            placeholder="在此编写 Skill 的详细指令，Agent 会在推理时参考这些指令..."></textarea>
+                            placeholder="Write detailed instructions for the skill here. The agent will reference these during reasoning..."></textarea>
                         <div class="skill-preview-pane mt-2" id="skillPreviewPane" style="display:none;"></div>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button type="button" class="skill-delete-btn" id="skillDeleteBtn" style="display:none;" onclick="deleteCurrentSkill()">
-                        <i class="bi bi-trash3"></i> 删除
+                        <i class="bi bi-trash3"></i> Delete
                     </button>
                     <div class="d-flex gap-2 ms-auto">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" onclick="saveSkill()">保存</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="saveSkill()">Save</button>
                     </div>
                 </div>
             </div>
